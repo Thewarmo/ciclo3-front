@@ -1,4 +1,4 @@
-# bank_fe
+# invapp_fe
 
 ## Project setup
 ```

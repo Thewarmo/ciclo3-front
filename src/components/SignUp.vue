@@ -17,8 +17,8 @@
                 <input type="email" v-model="user.email" placeholder="Email">
                 <br>
 
-                <input type="number" v-model="user.account.balance" placeholder="Initial Balance">
-                <br>
+                <!-- <input type="number" v-model="user.account.balance" placeholder="Initial Balance">
+                <br> -->
 
                 <button type="submit">Registrarse</button>
             </form>
@@ -56,7 +56,7 @@ export default {
     methods: {
         processSignUp: function(){
             axios.post(
-                "https://mision-tic-bank-be.herokuapp.com/user/", 
+                "https://mision-tic-inv-be.herokuapp.com/user/", 
                 this.user,  
                 {headers: {}}
             )
