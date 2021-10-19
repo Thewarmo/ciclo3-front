@@ -3,6 +3,7 @@
     <div class="container">
         <div class="titulo">
             <h1>¡Bienvenido  <span> {{username}} </span>!</h1>
+
             <hr>
         </div>
         
@@ -13,41 +14,99 @@
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" aria-current="true" href="#" @click="activo='Informacion',informacion">Informacion</a>
+        <a class="nav-link" aria-current="true" href="#" @click="activo='Informacion'">Admin Users</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="activo='Modificar',modificar">Modificar</a>
+        <a class="nav-link" href="#" @click="activo='Modificar',modificar">Registrar</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">Contacto</a>
+        <a class="nav-link" @click="activo='Contacto',contacto">Contacto</a>
       </li>
     </ul>
   </div>
+
   <div class="card-body">
-    <h5 class="card-title" v-if="activo ==='Informacion'"><strong>Informacion de {{username}} </strong></h5>
-    <h5 class="card-title" v-else> No hay informacion disponible</h5>
-    <p class="card-text" v-if="activo ==='Informacion'">aqui podras encontrar toda la informacion del usuario {{username}},por el momento solo tiene el username.</p>
-    <a href="#" class="btn btn-primary" v-if="activo ==='Informacion'" @click="logOut">Cerrar sesion</a>
+    <h5 class="card-title" v-if="activo ==='Informacion'"><strong>Administracion de {{username}}</strong></h5>
+    <div class="card-text" v-if="activo =='Informacion'">
+      <table class="table table-dark table-striped text-dark">
+            <tr>
+                <th>ID</th>
+                <th>USERNAME</th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>SALDO</th>
+            </tr>
+            <tr v-for="user in users" :key="user">
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.account.balance}}</td>  
+            </tr>      
+        </table>
+    </div>
+    
+    
+    <a href="#" class="btn btn-primary" v-if="activo ==='Informacion'" @click="informacion">Consultar</a> 
   </div>
+  <div class="container" v-if="activo =='Contacto'">
+      <div class="mb-3 row">
+       <h4>Datos de contacto</h4>
+       <hr>
+      <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+        <input type="password" class="form-control" id="email">
+    </div>
+    </div>
+      <div class="mb-3 row">
+    <label for="inputTelefono" class="col-sm-2 col-form-label">Telefono</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputTelefono">
+    </div>
+    <br>
+    <br>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Comentarios</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    </div>
+    <button class="btn btn-primary" @click="contacto">Enviar</button>
+    </div>
 </div>
         <!-- fin carrusel -->
-    </div>
+    
+        
+  </div>
 
 </template>
 
 
 <script>
+import axios from 'axios';
+
+
 
 export default {
     name: "Home",
-
+    
     data: function(){
         return {
             username: localStorage.getItem('username') || "none",
-            activo : ""
+            activo : "",
+            users:[],
+            account:{
+              name: "",
+              email: "",
+              balance: 0,
+              loaded: false,
+            }
+            
         }
     },
     methods:{
+
+      
+
         verifyAuth: function() {
       this.is_auth = localStorage.getItem("isAuth") || false;
 		
@@ -57,7 +116,14 @@ export default {
         this.$router.push({ name: "home" });
     },
         informacion(){
-            console.log(this.activo);
+            axios.get('https://mision-tic-inv-be.herokuapp.com/user/all')
+                .then((result) => {
+                    console.log(result.data)
+                    this.users = result.data
+                    })
+                .catch(() => {
+                    alert('ah ocurrido un error');
+                });
         },
         modificar(){
             console.log(this.activo)
@@ -67,6 +133,8 @@ export default {
 			alert("Sesión Cerrada");
 			this.verifyAuth();
 
+        },contacto(){
+          alert('Informacion enviada')
         }
     }
 }

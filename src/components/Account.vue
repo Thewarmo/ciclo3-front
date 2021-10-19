@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="loaded" class="information">
+    <div v-if="loaded" class="informacion">
         <h1>Información de su cuenta</h1>
         <h2>Nombre: <span>{{name}}</span></h2>
         <h2>Saldo: <span>{{balance}} COP </span></h2>
@@ -39,7 +39,7 @@ export default {
             let token = localStorage.getItem("token_access");
             let userId = jwt_decode(token).user_id.toString();
             
-            axios.get(`https://mision-tic-bank-be.herokuapp.com/user/${userId}/`, {headers: {'Authorization': `Bearer ${token}`}})
+            axios.get(`https://mision-tic-inv-be.herokuapp.com/user/${userId}/`, {headers: {'Authorization': `Bearer ${token}`}})
                 .then((result) => {
                     this.name = result.data.name;
                     this.email = result.data.email;	
@@ -52,7 +52,7 @@ export default {
         },
 
         verifyToken: function () {
-            return axios.post("https://mision-tic-bank-be.herokuapp.com/refresh/", {refresh: localStorage.getItem("token_refresh")}, {headers: {}})
+            return axios.post("https://mision-tic-inv-be.herokuapp.com/refresh/", {refresh: localStorage.getItem("token_refresh")}, {headers: {}})
 				.then((result) => {
 					localStorage.setItem("token_access", result.data.access);		
 				})
