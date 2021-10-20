@@ -28,11 +28,11 @@
       >
       </router-view>
     
-  </div>  
+     
 <!-- footer -->
-    <footer class="mainfooter" role="contentinfo">
+    <footer class="mainfooter " role="contentinfo">
   <div class="footer-middle">
-  <div class="container">
+  <div class="container container-fluid">
     <div class="row">
       <div class="col-md-3 col-sm-6">
         <!--Column1-->
@@ -91,6 +91,7 @@
   </div>
 </footer>
 <!-- /footer -->
+  </div> 
 </div>
   
 </template>
@@ -249,7 +250,7 @@ export default {
   background: -webkit-linear-gradient(59deg, #7bbee0, #171e24);
   background: linear-gradient(59deg, #5c9ebe, #090c0e);
   color: white;
-  margin-top:100px;
+  margin-top:100px; 
 }
 
 footer a {

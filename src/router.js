@@ -6,6 +6,7 @@ import SignUp from './components/SignUp.vue'
 import Home from './components/Home.vue'
 import Account from './components/Account.vue'
 import Inventario from './components/Inventario.vue'
+ import Farmacia from './components/Farmacia.vue'
 
 
 const routes = [{
@@ -37,7 +38,13 @@ const routes = [{
         path: '/user/inventario',
         name: "inventario",
         component: Inventario
+    },
+    {
+        path: '/user/farmacia',
+        name: "farmacia",
+        component: Farmacia
     }
+
 ];
 
 const router = createRouter({

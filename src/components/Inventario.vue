@@ -21,7 +21,7 @@
         <div class="consultar" v-if="activo=='consultar'">
         <h1 class="text-center"> Inventario total</h1>
         <br>
-        <table class="table table-dark table-striped text-dark">
+        <table class="table table-white table-striped text-dark">
             <tr>
                 <th>ID</th>
                 <th>NOMBRE</th>

@@ -2,8 +2,9 @@
 
     <div class="container">
         <div class="titulo">
-            <h1>¡Bienvenido  <span> {{username}} </span>!</h1>
-
+            <div class="alert alert-success mt-3" role="alert">
+                  <h4>Bienvenido <strong> {{username}} </strong></h4>  
+            </div>
             <hr>
         </div>
         
@@ -14,10 +15,10 @@
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" aria-current="true" href="#" @click="activo='Informacion'">Admin Users</a>
+        <a class="nav-link" aria-current="true" href="#" @click="informacion">Admin Users</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" @click="activo='Modificar',modificar">Registrar</a>
+        <a class="nav-link disabled" href="#" @click="activo='Modificar',modificar">Registrar</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" @click="activo='Contacto',contacto">Contacto</a>
@@ -28,7 +29,7 @@
   <div class="card-body">
     <h5 class="card-title" v-if="activo ==='Informacion'"><strong>Administracion de {{username}}</strong></h5>
     <div class="card-text" v-if="activo =='Informacion'">
-      <table class="table table-dark table-striped text-dark">
+      <table class="table table-dark table-striped text-white">
             <tr>
                 <th>ID</th>
                 <th>USERNAME</th>
@@ -47,12 +48,13 @@
     </div>
     
     
-    <a href="#" class="btn btn-primary" v-if="activo ==='Informacion'" @click="informacion">Consultar</a> 
+    
   </div>
   <div class="container" v-if="activo =='Contacto'">
       <div class="mb-3 row">
+       
        <h4>Datos de contacto</h4>
-       <hr>
+       
       <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
         <input type="password" class="form-control" id="email">
@@ -70,12 +72,16 @@
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     </div>
-    <button class="btn btn-primary" @click="contacto">Enviar</button>
+    <button class="btn btn-primary mb-2" @click="contacto">Enviar</button>
     </div>
 </div>
         <!-- fin carrusel -->
     
+        <button class="btn btn-primary mt-3" @click="cliente">ir a sitio de usuario</button>
+
+       
         
+       
   </div>
 
 </template>
@@ -116,6 +122,7 @@ export default {
         this.$router.push({ name: "home" });
     },
         informacion(){
+            this.activo='Informacion';
             axios.get('https://mision-tic-inv-be.herokuapp.com/user/all')
                 .then((result) => {
                     console.log(result.data)
@@ -135,6 +142,9 @@ export default {
 
         },contacto(){
           alert('Informacion enviada')
+        },
+        cliente(){
+          this.$router.push({name: "farmacia"})
         }
     }
 }
